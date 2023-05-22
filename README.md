@@ -1,2 +1,2 @@
-# chrono_mitsuba
+# Chrono in Mitsuba
 Visualizing Chrono in Mitsuba
