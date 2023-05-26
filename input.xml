@@ -1,28 +1,101 @@
 <scene version="3.3.0">
-	<default name="spp" value="64" />
-	<default name="resy" value="1080" />
-	<default name="resx" value="1920" />
-	<default name="max_depth" value="17" />
+	<default name="spp" value="256"/>
+	<default name="resy" value="1080"/>
+	<default name="resx" value="1920"/>
+	<default name="max_depth" value="17"/>
+
 	<integrator type="path">
-		<integer name="max_depth" value="$max_depth" />
+		<integer name="max_depth" value="$max_depth"/>
 	</integrator>
+
     <sensor type="perspective">
-		<float name="fov" value="60" />
+		<float name="fov" value="90"/>
 		<transform name="to_world">
-			<matrix value="-0.988479 -0.00428443 0.151294 -1.69049 9.42177e-010 0.999599 0.0283071 1.27158 -0.151355 0.027981 -0.988083 5.88653 0 0 0 1" />
+			<lookat target="0, 0, 0" origin="0, 4, 4" up="0, 0, 1"/>
 		</transform>
 		<sampler type="independent">
-			<integer name="sample_count" value="$spp" />
+			<integer name="sample_count" value="$spp"/>
 		</sampler>
 		<film type="hdrfilm">
-			<integer name="width" value="$resx" />
-			<integer name="height" value="$resy" />
-			<string name="file_format" value="openexr" />
-			<string name="pixel_format" value="rgb" />
-			<rfilter type="tent" />
+			<integer name="width" value="$resx"/>
+			<integer name="height" value="$resy"/>
+			<string name="file_format" value="openexr"/>
+			<string name="pixel_format" value="rgb"/>
 		</film>
 	</sensor>
-    <shape type="obj">
-        <string name="filename" value="src/viper_cylwheel.obj" />
-    </shape>
+	<emitter type="point">
+    	<point name="position" value="0, -2, 6"/>
+    	<rgb name="intensity" value="254, 252, 215"/>
+	</emitter>
+
+	<shape type="obj">
+		<string name="filename" value="src/crater.obj"/> 
+		<bsdf type="diffuse">
+			<texture name="reflectance" type="bitmap">
+				<string name="filename" value="src/moon_texture.jpg"/>
+			</texture>
+		</bsdf>
+	</shape>
+
+	<shape type="obj">
+		<string name="filename" value="src/rock1.obj"/>
+		<transform name="to_world">
+			<translate value="2, 1, 0.2"/>
+			<scale value="1"/>
+		</transform>
+		<bsdf type="diffuse">
+			<texture name="reflectance" type="bitmap">
+				<string name="filename" value="src/rock_texture_2.jpg"/>
+			</texture>
+		</bsdf>
+	</shape>
+
+	<shape type="obj">
+		<string name="filename" value="src/rock1.obj"/>
+		<transform name="to_world">
+			<translate value="-2, 0, 0.1"/>
+			<scale value="1"/>
+		</transform>
+		<bsdf type="diffuse">
+			<texture name="reflectance" type="bitmap">
+				<string name="filename" value="src/rock_texture_2.jpg"/>
+			</texture>
+		</bsdf>
+	</shape>
+
+	<shape type="obj">
+		<string name="filename" value="src/viper_chassis.obj"/>
+		<transform name="to_world">
+			<translate value="0, 0, 0"/>
+			<scale value="1"/>
+			<rotate x="1" angle="90"/>
+			<rotate z="1" angle="180"/>
+		</transform>
+		<bsdf type="twosided" id="RoughSteelBSDF">
+			<bsdf type="roughconductor">
+				<float name="alpha" value="0.1" />
+				<string name="distribution" value="ggx" />
+				<rgb name="specular_reflectance" value="1, 1, 1" />
+				<rgb name="eta" value="2, 2, 2" />
+				<rgb name="k" value="0, 0, 0" />
+			</bsdf>
+		</bsdf>
+	</shape>
+
+	<!-- <shape type="obj">
+		<string name="filename" value="src/rock_2_high_res.obj"/>
+		<transform name="to_world">
+			<translate value="0, 1, 0.1"/>
+			<scale value="1.5"/>
+		</transform>
+	</shape>
+
+	<shape type="obj">
+		<string name="filename" value="src/rock_3_high_res.obj"/>
+		<transform name="to_world">
+			<translate value="0, 1, 0.1"/>
+			<scale value="1.3"/>
+		</transform>
+	</shape> -->
+
 </scene>
