@@ -2,9 +2,9 @@ import mitsuba as mi
 import time
 
 start = time.time()
-
-mi.set_variant("cuda_ad_rgb")
-scene = mi.load_file("input.xml")
+print(mi.variants())
+mi.set_variant("llvm_ad_rgb")
+scene = mi.load_file("scene.xml")
 image = mi.render(scene)
 mi.util.write_bitmap("image.png", image)
 
